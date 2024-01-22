@@ -1,0 +1,63 @@
+CREATE DATABASE Transportadora_Aerea;
+
+USE Transportadora_Aerea;
+
+
+CREATE TABLE Piloto (
+    cod_piloto INTEGER NOT NULL,
+    nom_piloto VARCHAR(50) NOT NULL,
+    cpf_piloto CHAR(11) NOT NULL,
+    des_endereco VARCHAR(50) NOT NULL,
+    PRIMARY KEY (cod_piloto)
+);
+
+INSERT INTO Piloto (cod_piloto, nom_piloto, cpf_piloto, des_endereco)
+VALUES 
+    (2, 'Thalita Aquino', '16621802684', 'R:Gen Mascarenhas 401 - Novo Progresso'),
+    (3, 'Pedro Justino', '08614335928', 'R:Batista de Andrada 95 - Jardim Inconfidencia'),
+    (4, 'Isaura Cassia', '07512123158', 'R:Sacramento 148 - Centro'),
+    (5, 'Marcos Peixoto', '53496718121', 'R:Livia 111 - Gloria');
+
+SELECT * FROM Piloto;
+
+CREATE TABLE Aviao (
+    cod_aviao INTEGER NOT NULL,
+    nom_aviao VARCHAR(50) NOT NULL,
+    num_matricula INTEGER NOT NULL,
+    nom_fabricante VARCHAR(50) NOT NULL,
+    qtd_assentos INTEGER NOT NULL,
+    hor_autonomia TIME NOT NULL,
+    PRIMARY KEY (cod_aviao)
+);
+
+INSERT INTO Aviao (cod_aviao, nom_aviao, num_matricula, nom_fabricante, qtd_assentos, hor_autonomia)
+VALUES 
+    (3, 'Dusty', 2684, 'Airbus', 276, '20:00:00'),
+    (4, 'Ishani', 5928, 'Boeing', 137, '18:00:00'),
+    (5, 'Skipper Riley', 3158, 'Embraer', 246, '15:30:00'),
+    (6, 'Rochelle', 8421, 'Novaer', 148, '13:40:00');
+
+SELECT * FROM Aviao;
+
+CREATE TABLE Voo (
+    cod_voo INTEGER NOT NULL,
+    cod_piloto INTEGER NOT NULL,
+    cod_aviao INTEGER NOT NULL,
+    dta_voo DATE NOT NULL,
+    hor_partida TIME NOT NULL,
+    hor_chegada TIME NOT NULL,
+    des_origem VARCHAR(50) NOT NULL,
+    des_destino VARCHAR(50) NOT NULL,
+    PRIMARY KEY (cod_voo),
+    FOREIGN KEY (cod_piloto) REFERENCES Piloto (cod_piloto),
+    FOREIGN KEY (cod_aviao) REFERENCES Aviao (cod_aviao)
+);
+
+INSERT INTO Voo (cod_voo, cod_piloto, cod_aviao, dta_voo, hor_partida, hor_chegada, des_origem, des_destino)
+VALUES 
+    (1, 2, 3, '2023-12-01', '23:00:00', '00:30:00', 'Belo Horizonte', 'Sao Paulo'),
+    (2, 3, 4, '2024-01-01', '06:10:00', '11:15:00', 'Sao Paulo', 'Fortaleza'),
+    (3, 4, 5, '2023-12-20', '12:50:00', '18:10:00', 'Ilheus', 'Uberlandia'),
+    (4, 4, 6, '2024-07-18', '19:40:00', '16:00:00', 'Brasilia', 'Miami');
+
+SELECT * FROM Voo;

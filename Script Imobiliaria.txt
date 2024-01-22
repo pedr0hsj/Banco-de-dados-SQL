@@ -1,0 +1,63 @@
+CREATE DATABASE Imobiliaria;
+
+USE Imobiliaria;
+
+CREATE TABLE Cliente 
+(cod_cliente INTEGER NOT NULL, nom_cliente VARCHAR(50) NOT NULL, 
+ des_endereco VARCHAR(50) NOT NULL, num_telefone INTEGER NOT NULL, des_email varchar(50) NOT NULL, PRIMARY KEY (cod_cliente)); 
+ 
+ INSERT INTO Cliente 
+ (cod_cliente, nom_cliente, des_endereco, num_telefone, des_email) VALUES 
+ (1, 'Thalita', 'R: General mascarenhas 401 - novo progresso', 31995763510, 'thalitaav100@gmail.com'),
+ (2, 'Isaura', 'R:Sacramento 148 - Centro', 31999922293, 'isauracs96@gmail.com'),
+ (3, 'Pedro', 'R:Batista de Andrada 95 - Jardim Inconfidencia', 31975723248, 'phsjustino090303@gmail.com'),
+ (4, 'Marcos', 'R:Livia 111 - Gloria', 3187753431, 'marcospeix@012gmail.com');
+ 
+ CREATE TABLE Imovel
+ (cod_imovel INTEGER NOT NULL, cod_cliente INTEGER NOT NULL, val_venda FLOAT NOT NULL, dta_construcao DATE NOT NULL, num_vagas INTEGER NOT NULL,
+  des_localizacao VARCHAR(50) NOT NULL, num_quartos INTEGER NOT NULL, num_banheiro INTEGER NOT NULL,
+  PRIMARY KEY (cod_imovel), FOREIGN key (cod_cliente) REFERENCES Cliente (cod_cliente));
+  
+  INSERT INTO Imovel
+  (cod_imovel, cod_cliente, val_venda, dta_construcao, num_vagas, des_localizacao, num_quartos, num_banheiro) VALUES
+  (2, 2, 250.000, '01-05-2020', 10, 'Regiao sul', 3, 1),
+  (4, 3, 150.000, '01-09-2022', 60, 'Regiao norte', 3, 2),
+  (1, 4, 300.000, '15-02-2023', 150, 'Regiao central', 4, 2),
+  (3, 1, 250.000, '10-01-2024', 250, 'Regiao Leste', 3, 3); 
+  
+ CREATE TABLE Visitante
+ (cod_visitante INTEGER NOT NULL, nom_visitante VARCHAR(50) NOT NULL, cpf_visitante CHAR(11) NOT NULL,
+ des_email VARCHAR(50) NOT NULL, num_telefone INTEGER NOT NULL,
+  PRIMARY KEY (cod_visitante));
+  
+  INSERT INTO Visitante
+  (cod_visitante, nom_visitante, cpf_visitante, des_email, num_telefone) VALUES
+  (4, 'Erlandes', 02695748625, 'erlandes@gmail.com', 38999194919),
+  (5, 'Miguel', 84621579512, 'miguel@gmail.com', 3199765412),
+  (6, 'Isis', 16602515896, 'isis@gmail.com', 35998753510), 
+  (7, 'Otavio', 08065798432, 'otavio@gmail.com', 3197228664);
+  
+ CREATE TABLE Visitas
+  (cod_visitas INTEGER NOT NULL, cod_imovel INTEGER NOT NULL,
+   cod_visitante INTEGER NOT NULL, dta_visitas DATE NOT NULL, 
+  PRIMARY KEY (cod_visitas), FOREIGN KEY (cod_imovel) REFERENCES Imovel (cod_imovel), FOREIGN KEY (cod_visitante) REFERENCES Visitante (cod_visitante));
+  
+ INSERT INTO Visitas 
+ (cod_visitas, cod_imovel, cod_visitante, dta_visitas) VALUES
+ (1, 1, 4, '10-06-2023'),
+ (2, 3, 6, '05-03-2024'),
+ (3, 2, 5, '18-07-2021'),
+ (4, 4, 7, '01-01-2023'); 
+ 
+ CREATE TABLE Visitas_visitante
+ (cod_visitas_visitante INTEGER NOT NULL, cod_visitas INTEGER NOT NULL, cod_visitante INTEGER NOT NULL, 
+  PRIMARY KEY (cod_visitas_visitante), FOREIGN KEY (cod_visitas) REFERENCES Visitas (cod_visitas),
+  FOREIGN KEY (cod_visitante) REFERENCES Visitante (Cod_visitante));
+  
+  INSERT INTO Visitas_visitante
+  (cod_visitas_visitante, cod_visitas, cod_visitante) VALUES 
+  (4, 1, 7), (5, 2, 5),
+  (6, 3, 6), (7, 4, 4); 
+  
+  
+ 
